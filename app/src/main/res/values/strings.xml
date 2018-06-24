@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">cortex</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_tarefa">TarefaActivity</string>
+    <array name="sequencia">
+        <item>Unico</item>
+        <item>Semanal</item>
+        <item>Mensal</item>
+        <item>Anual</item>
+    </array>
+
 </resources>

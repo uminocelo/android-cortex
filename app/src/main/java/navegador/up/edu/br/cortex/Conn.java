@@ -21,7 +21,7 @@ public class Conn extends SQLiteOpenHelper {
                 "titulo varchar(250) not null,"+
                 "descricao varchar(250),"+
                 "dataInicio date not null,"+
-                "dataFim date,"+
+                "dataFim datetime,"+
                 "sequencial varchar(15),"+
                 "statusTarefa boolean not null default 0"+
                 ")";

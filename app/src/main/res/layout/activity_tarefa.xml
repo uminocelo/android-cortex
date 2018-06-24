@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".TarefaActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,15 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/cortexBar"
-            android:textAlignment="center"
-            app:title="Cortex"
             app:titleTextColor="@color/cortexTitleBar"
-            app:navigationIcon="@drawable/ic_cortex"
+            app:title=" Crie uma nova tarefa"
+            app:logo="@drawable/ic_cortex"
+            app:logoDescription="@string/app_name"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_tarefa" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -32,9 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_if_asset_85_3298601"
-        tools:ignore="VectorDrawableCompat"
-        app:backgroundTint="@color/cortexFabButton"/>
-
+        app:backgroundTint="@color/cortexFabButton"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
 </android.support.design.widget.CoordinatorLayout>
