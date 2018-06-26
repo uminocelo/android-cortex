@@ -82,11 +82,12 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/dataInicio"
+                    android:id="@+id/txtInico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="textPersonName" />
+
             </TableRow>
 
             <TableRow
@@ -105,11 +106,12 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/dataFim"
+                    android:id="@+id/txtFim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="textPersonName" />
+
             </TableRow>
 
             <TableRow

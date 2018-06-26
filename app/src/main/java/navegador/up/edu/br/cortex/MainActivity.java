@@ -1,9 +1,12 @@
 package navegador.up.edu.br.cortex;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -54,8 +57,30 @@ public class MainActivity extends AppCompatActivity {
 
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                return false;
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int i, long l) {
+
+                AlertDialog.Builder alert =  new AlertDialog.Builder(MainActivity.this);
+                alert.setMessage("Deseja completar a tarefa?");
+                alert.setCancelable(false);
+                alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Tarefa tarefa = (Tarefa)adapterView.getItemAtPosition(i);
+
+                        new  TarefaDao().alterarTarefa(tarefa,true);
+                    }
+                });
+                alert.setNegativeButton("Não, marcar como incompleta.", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Tarefa tarefa = (Tarefa)adapterView.getItemAtPosition(i);
+
+                        new TarefaDao().alterarTarefa(tarefa,false);
+                    }
+                });
+                alert.show();
+
+                return true;
             }
         });
 

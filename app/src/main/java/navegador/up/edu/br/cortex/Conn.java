@@ -20,8 +20,8 @@ public class Conn extends SQLiteOpenHelper {
                 "id integer primary key autoincrement,"+
                 "titulo varchar(250) not null,"+
                 "descricao varchar(250),"+
-                "dataInicio date not null,"+
-                "dataFim datetime,"+
+                "dataInicio varchar(8) not null,"+
+                "dataFim varchar(8),"+
                 "sequencial varchar(15),"+
                 "statusTarefa boolean not null default 0"+
                 ")";

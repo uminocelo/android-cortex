@@ -14,26 +14,26 @@ public class TarefaDao {
     static ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
     static  Integer id = 0;
 
-    private String getDateTime(Date time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return dateFormat.format(time);
-    }
 
-    public void salvar(Tarefa tarefa){
+    public void salvar(Tarefa tarefa,boolean valor){
         SQLiteDatabase conn = Conn.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("titulo",tarefa.getTitulo());
         values.put("descricao",tarefa.getDescricao());
-        values.put("dataInicio",getDateTime(tarefa.getDataInicio()));
-        //values.put("dataFim",getDateTime(tarefa.getDataFim()));
+        values.put("dataInicio",tarefa.getDataInicio());
+        if (tarefa.getDataFim() == null){
+            values.put("dataFim","");
+        } else {
+            values.put("dataFim",tarefa.getDataFim());
+        }
         values.put("sequencial",tarefa.getSequencial());
-        values.put("statusTarefas",tarefa.isStatusTarefa());
 
         if(tarefa.getId() == null){
+            values.put("statusTarefas",valor);
             conn.insert("tarefa", null,values);
         } else {
+            values.put("statusTarefas",valor);
             conn.update("tarefa", values,"id = ?", new String [] {tarefa.getId().toString()});
         }
 
@@ -63,28 +63,20 @@ public class TarefaDao {
     }
 
     //
-    public void validarTarefa(Tarefa tarefa){
-        ContentValues valores = pegarTarefa(tarefa);
-        int conn = Conn.getInstance().getReadableDatabase().update("tarefa",valores,"id = ?",new String[]{tarefa.getId().toString()});
+    public void alterarTarefa(Tarefa tarefa,Boolean ativar){
+        ContentValues valores = pegarTarefa(tarefa,ativar);
+        SQLiteDatabase conn = Conn.getInstance().getReadableDatabase();
+        conn.update("tarefa",valores,"id = ?",new String[]{tarefa.getId().toString()});
 
     }
-    /*
-        public List<Tarefa> listarCompletos(){
-            SQLiteDatabase conn = Conn.getInstance().getReadableDatabase();
-            String query = "SELECT id, titulo, descricao FROM tarefa WHERE statusTarefa = 1 ";
-            //Cursor c = conn.query(query,null);
-            //Cursor c = conn.query("tarefa",new String[]{"id","titulo","descricao"},null,null,null,null,null,"id");
 
-        }
-    */
-
-    public ContentValues pegarTarefa(Tarefa tarefa){
+    public ContentValues pegarTarefa(Tarefa tarefa, Boolean ativar){
         ContentValues dados = new ContentValues();
         dados.put("tarefa.id",tarefa.getId());
         dados.put("tarefa.titulo",tarefa.getTitulo());
         dados.put("tarefa.descricao",tarefa.getDescricao());
-        dados.put("tarefa.dataFim",getDateTime(tarefa.getDataFim()));
-        dados.put("tarefa.statusTarefa",tarefa.isStatusTarefa());
+        dados.put("tarefa.dataFim",tarefa.getDataFim());
+        dados.put("tarefa.statusTarefa",ativar);
         return  dados;
     }
 

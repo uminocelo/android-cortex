@@ -7,8 +7,8 @@ public class Tarefa implements Serializable{
     private Integer id;
     private String titulo;
     private String descricao;
-    private Date dataInicio;
-    private Date dataFim;
+    private String dataInicio;
+    private String dataFim;
     private String sequencial;
     private boolean statusTarefa;
 
@@ -36,19 +36,19 @@ public class Tarefa implements Serializable{
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFim() {
+    public String getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(Date dataFim) {
+    public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
     }
 
@@ -68,6 +68,7 @@ public class Tarefa implements Serializable{
         this.statusTarefa = statusTarefa;
     }
 
+    @Override
     public boolean equals(Object o){
         if(id == null || ((Tarefa)o).getId() == null){
             return false;
