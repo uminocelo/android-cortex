@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int i, long l) {

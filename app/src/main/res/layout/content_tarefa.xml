@@ -81,12 +81,13 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/txtInico"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+                <TextView
+                    android:id="@+id/txtInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lineSpacingExtra="18sp"
+                    android:text="00/00/0000"
+                    android:textSize="24sp" />
 
             </TableRow>
 
@@ -105,12 +106,12 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/txtFim"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:text="00/00/0000"
+                    android:textSize="24sp" />
 
             </TableRow>
 
