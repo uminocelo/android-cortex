@@ -36,12 +36,12 @@ public class TarefaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText titulo = (EditText)findViewById(R.id.txt_titulo);
-        EditText descricao =(EditText)findViewById(R.id.txt_descricao);
+        final EditText titulo = (EditText)findViewById(R.id.txt_titulo);
+        final EditText descricao =(EditText)findViewById(R.id.txt_descricao);
         inicio = (TextView)findViewById(R.id.txtInico);
         fim = (TextView)findViewById(R.id.txtFim);
 
-        Spinner sequencial = (Spinner)findViewById(R.id.spinner);
+        final Spinner sequencial = (Spinner)findViewById(R.id.spinner);
 
         inicio.setInputType(InputType.TYPE_NULL);
         inicio.setOnClickListener(new View.OnClickListener() {
@@ -97,16 +97,23 @@ public class TarefaActivity extends AppCompatActivity {
             }else{
                 fim.setText("");
             }
-
-
         }
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-               public void onClick(View view) {
+            public void onClick(View view) {
+                if(tarefa==null){
+                    tarefa = new Tarefa();
+                }
+                tarefa.setTitulo(titulo.getText().toString());
+                tarefa.setDescricao(descricao.getText().toString());
+                tarefa.setSequencial(sequencial.getSelectedItem().toString());
+                tarefa.setDataInicio(inicio.getText().toString());
+                tarefa.setDataFim(fim.getText().toString());
                 new TarefaDao().salvar(tarefa,true);
+
                 tarefa = null;
+
                 Toast.makeText(getApplicationContext(),
                         "Salvo com sucesso!",
                         Toast.LENGTH_LONG).show();
@@ -114,6 +121,7 @@ public class TarefaActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
     }
 
 }
