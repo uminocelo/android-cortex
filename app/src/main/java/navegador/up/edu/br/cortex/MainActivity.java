@@ -1,5 +1,6 @@
 package navegador.up.edu.br.cortex;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,11 +11,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ListView;
@@ -24,6 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText emailOfForm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
@@ -87,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             }
-
         });
 
     }
@@ -117,25 +119,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enviarEmail(MenuItem item) {
-        Intent ei = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto","kernel.codebrothers@gmail.com",null));
-        ei.putExtra(Intent.EXTRA_SUBJECT,"Relatorio de tarefas");
 
-        List<Tarefa> tods = new TarefaDao().listar();
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.dialog_get_email, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setView(promptView);
 
-        String te = "";
+        final EditText editText = (EditText) promptView.findViewById(R.id.txt_email);
 
-        for (Tarefa x: tods
-             ) {
-            if(x.isStatusTarefa()==false){
-                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Incompleto\n\n");
-            }else{
-                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Completo\n\n");
-            }
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //emailOfForm.setText();
+                        Intent ei = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                "mailto",editText.getText().toString() ,null));
 
-        }
+                        ei.putExtra(Intent.EXTRA_SUBJECT,"Relatorio de tarefas");
 
-        ei.putExtra(Intent.EXTRA_TEXT, te);
-        startActivity(Intent.createChooser(ei,"Email relatorio"));
+                        List<Tarefa> tods = new TarefaDao().listar();
+
+                        String te = "";
+
+                        for (Tarefa x: tods
+                                ) {
+                            if(x.isStatusTarefa()==false){
+                                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Incompleto\n\n");
+                            }else{
+                                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Completo\n\n");
+                            }
+
+                        }
+
+                        ei.putExtra(Intent.EXTRA_TEXT, te);
+                        startActivity(Intent.createChooser(ei,"Email relatorio"));
+                    }
+                })
+                .setNegativeButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
+
 }

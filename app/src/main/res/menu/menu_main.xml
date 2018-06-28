@@ -8,10 +8,4 @@
         android:title="Enviar Relatorio"
         app:showAsAction="never"
         android:onClick="enviarEmail"/>
-    <item
-        android:id="@+id/ordernar"
-        android:orderInCategory="100"
-        android:title="Ordenar Completos"
-        app:showAsAction="never"
-        />
 </menu>

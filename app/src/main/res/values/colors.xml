@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="cortexBar">#6AE77D</color>
+    <color name="cortexBar">#6ae77d</color>
     <color name="cortexTitleBar">#290081</color>
-    <color name="cortexFabButton">#5ECD6F</color>
+    <color name="cortexFabButton">#d85ecd6f</color>
 </resources>
