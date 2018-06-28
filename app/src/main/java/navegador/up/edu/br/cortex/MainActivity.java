@@ -2,6 +2,7 @@ package navegador.up.edu.br.cortex;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new Conn(getApplicationContext(), "tarefas.db", null ,1);
+        new Conn(getApplicationContext(), "tarefas.db", null ,2);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
             }
         );
 
+
         ListView listaTarefas = (ListView)findViewById(R.id.listaTarefas);
 
         TarefaAdapter ta = new TarefaAdapter(new TarefaDao().listar(),this);
-
         listaTarefas.setAdapter(ta);
+
+        //ACAO DE CLIQUE
 
         listaTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -54,45 +60,46 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
 
-                AlertDialog.Builder alert =  new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setMessage("Deseja completar a tarefa?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Tarefa tarefa = (Tarefa)adapterView.getItemAtPosition(i);
+                        Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
 
-                        new  TarefaDao().alterarTarefa(tarefa,true);
+                        new TarefaDao().alterarTarefa(tarefa, true);
                     }
                 });
                 alert.setNegativeButton("Não, marcar como incompleta.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Tarefa tarefa = (Tarefa)adapterView.getItemAtPosition(i);
-
-                        new TarefaDao().alterarTarefa(tarefa,false);
+                        Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
+                        new TarefaDao().alterarTarefa(tarefa, false);
                     }
                 });
                 alert.show();
 
                 return true;
             }
+
         });
 
     }
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    */
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,5 +114,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void enviarEmail(MenuItem item) {
+        Intent ei = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto","kernel.codebrothers@gmail.com",null));
+        ei.putExtra(Intent.EXTRA_SUBJECT,"Relatorio de tarefas");
+
+        List<Tarefa> tods = new TarefaDao().listar();
+
+        String te = "";
+
+        for (Tarefa x: tods
+             ) {
+            if(x.isStatusTarefa()==false){
+                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Incompleto\n\n");
+            }else{
+                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Completo\n\n");
+            }
+
+        }
+
+        ei.putExtra(Intent.EXTRA_TEXT, te);
+        startActivity(Intent.createChooser(ei,"Email relatorio"));
     }
 }

@@ -41,9 +41,13 @@ public class TarefaAdapter extends BaseAdapter {
         View v = act.getLayoutInflater().inflate(R.layout.tarefa_adapter, parent,false);
         TextView titulo = v.findViewById(R.id.titulo_lbl);
         ImageView tipo = v.findViewById(R.id.icon_tarefa);
-        Tarefa t = tarefas.get(i);
 
+        Tarefa t = tarefas.get(i);
         titulo.setText(t.getTitulo());
+
+
+
+
         if(t.getSequencial().equals("Unico")){
             tipo.setImageResource(R.drawable.ic_if_calendar_alt_285665);
         }else if(t.getSequencial().equals("Mensal")){
@@ -53,10 +57,10 @@ public class TarefaAdapter extends BaseAdapter {
         }else{
             tipo.setImageResource(R.drawable.ic_if_calendar_clock_299096);
         }
-
         return v;
     }
     public void remove(Tarefa tarefa) {
+
         this.tarefas.remove(tarefa);
     }
 }

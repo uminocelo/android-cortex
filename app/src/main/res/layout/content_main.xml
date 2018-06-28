@@ -8,23 +8,9 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoText="false"
-            android:cursorVisible="false"
-            android:text="Seja bem vindo!"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
         <ListView
             android:id="@+id/listaTarefas"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </TableRow>
+
 </android.support.constraint.ConstraintLayout>

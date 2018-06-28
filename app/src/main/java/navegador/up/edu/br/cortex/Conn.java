@@ -23,7 +23,7 @@ public class Conn extends SQLiteOpenHelper {
                 "dataInicio varchar(8) not null,"+
                 "dataFim varchar(8),"+
                 "sequencial varchar(15),"+
-                "statusTarefa boolean not null default 0"+
+                "statusTarefas boolean not null default 0"+
                 ")";
         sqLiteDatabase.execSQL(statement);
     }

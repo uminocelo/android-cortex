@@ -38,7 +38,7 @@ public class TarefaActivity extends AppCompatActivity {
 
         final EditText titulo = (EditText)findViewById(R.id.txt_titulo);
         final EditText descricao =(EditText)findViewById(R.id.txt_descricao);
-        inicio = (TextView)findViewById(R.id.txtInico);
+        inicio = (TextView)findViewById(R.id.txtInicio);
         fim = (TextView)findViewById(R.id.txtFim);
 
         final Spinner sequencial = (Spinner)findViewById(R.id.spinner);
@@ -92,7 +92,7 @@ public class TarefaActivity extends AppCompatActivity {
             descricao.setText((tarefa.getDescricao()));
             inicio.setText(tarefa.getDataInicio());
             sequencial.setSelection(((ArrayAdapter)sequencial.getAdapter()).getPosition(tarefa.getSequencial()));
-            if(sequencial.getSelectedItem() == "Unico"){
+            if(sequencial.getSelectedItem() != "Unico"){
                 fim.setText(tarefa.getDataFim());
             }else{
                 fim.setText("");
@@ -110,7 +110,7 @@ public class TarefaActivity extends AppCompatActivity {
                 tarefa.setSequencial(sequencial.getSelectedItem().toString());
                 tarefa.setDataInicio(inicio.getText().toString());
                 tarefa.setDataFim(fim.getText().toString());
-                new TarefaDao().salvar(tarefa,true);
+                new TarefaDao().salvar(tarefa);
 
                 tarefa = null;
 
