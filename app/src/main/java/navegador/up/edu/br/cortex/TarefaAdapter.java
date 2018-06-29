@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,9 +42,18 @@ public class TarefaAdapter extends BaseAdapter {
         View v = act.getLayoutInflater().inflate(R.layout.tarefa_adapter, parent,false);
         TextView titulo = v.findViewById(R.id.titulo_lbl);
         ImageView tipo = v.findViewById(R.id.icon_tarefa);
+        TextView stsTarefa = v.findViewById(R.id.status_tarefa);
 
         Tarefa t = tarefas.get(i);
         titulo.setText(t.getTitulo());
+
+        if(t.isStatusTarefa()==false){
+            stsTarefa.setText("Em andamento...");
+        }else{
+            stsTarefa.setText("Completa");
+        }
+
+
 
 
 

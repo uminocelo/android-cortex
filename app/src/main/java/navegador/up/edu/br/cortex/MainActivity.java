@@ -17,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ListView;
 
@@ -27,7 +29,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText emailOfForm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-        ListView listaTarefas = (ListView)findViewById(R.id.listaTarefas);
+        final ListView listaTarefas = (ListView)findViewById(R.id.listaTarefas);
 
         TarefaAdapter ta = new TarefaAdapter(new TarefaDao().listar(),this);
         listaTarefas.setAdapter(ta);
 
         //ACAO DE CLIQUE
-
         listaTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
                 Tarefa t = (Tarefa) adapterView.getItemAtPosition(i);
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
@@ -77,21 +79,40 @@ public class MainActivity extends AppCompatActivity {
                         Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
 
                         new TarefaDao().alterarTarefa(tarefa, true);
+                        //((TarefaAdapter) adapterView.getAdapter()).notifyDataSetChanged();
+
                     }
                 });
+
                 alert.setNegativeButton("Não, marcar como incompleta.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
                         new TarefaDao().alterarTarefa(tarefa, false);
+                        //((TarefaAdapter) adapterView.getAdapter()).notifyDataSetChanged();
                     }
                 });
                 alert.show();
 
                 return true;
+
             }
         });
 
+        /*
+        *
+        *
+        complet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (complet.isChecked()) {
+                    //Tarefa tarefa = (Tarefa) listaTarefas.getSelectedItemPosition(i);
+
+                    new TarefaDao().alterarTarefa(tarefa, true);
+                }
+            }
+        });
+        * */
     }
 
 

@@ -32,9 +32,6 @@ public class TarefaDao {
         }
         values.put("sequencial",tarefa.getSequencial());
 
-
-
-
         if(tarefa.getId() == null){
             values.put("statusTarefas",false);
 
@@ -68,12 +65,20 @@ public class TarefaDao {
     }
 
     //
-    public void alterarTarefa(Tarefa tarefa,Boolean ativar){
+    public void alterarTarefa(Tarefa tarefa, boolean ativar){
         SQLiteDatabase conn = Conn.getInstance().getWritableDatabase();
         ContentValues dados = new ContentValues();
-        dados.put("statusTarefas",ativar);
+        dados.put("titulo",tarefa.getTitulo());
+        dados.put("descricao",tarefa.getDescricao());
+        dados.put("dataInicio",tarefa.getDataInicio());
+        dados.put("dataFim",tarefa.getDataFim());
+        dados.put("sequencial",tarefa.getSequencial());
+        if(ativar == false){
+            dados.put("statusTarefas", ativar);
+        }else{
+            dados.put("statusTarefas", ativar);
+        }
         conn.update("tarefa",dados,"id = ?",new String[]{tarefa.getId().toString()});
-
     }
 
     public void excluir(Tarefa tarefa){
