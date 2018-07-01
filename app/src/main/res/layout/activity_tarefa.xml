@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/cortexBar"
-            app:titleTextColor="@color/cortexTitleBar"
-            app:title=" Crie uma nova tarefa"
             app:logo="@drawable/ic_cortex"
             app:logoDescription="@string/app_name"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title=" Crie uma nova tarefa"
+            app:titleTextColor="@color/cortexTitleBar" />
+
 
     </android.support.design.widget.AppBarLayout>
 
@@ -33,6 +34,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/cortexFabButton"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@drawable/ic_if_floppy_285657"
+        tools:ignore="VectorDrawableCompat" />
 
 </android.support.design.widget.CoordinatorLayout>

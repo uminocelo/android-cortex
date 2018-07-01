@@ -43,21 +43,14 @@ public class TarefaAdapter extends BaseAdapter {
         TextView titulo = v.findViewById(R.id.titulo_lbl);
         ImageView tipo = v.findViewById(R.id.icon_tarefa);
         TextView stsTarefa = v.findViewById(R.id.status_tarefa);
-
         Tarefa t = tarefas.get(i);
         titulo.setText(t.getTitulo());
-
-        if(t.isStatusTarefa()==false){
-            stsTarefa.setText("Em andamento...");
-        }else{
+        if(t.getStatusTarefa() == 1){
             stsTarefa.setText("Completa");
         }
-
-
-
-
-
-
+        if(t.getStatusTarefa()==0){
+            stsTarefa.setText("Em andamento...");
+        }
         if(t.getSequencial().equals("Unico")){
             tipo.setImageResource(R.drawable.ic_if_calendar_alt_285665);
         }else if(t.getSequencial().equals("Mensal")){
@@ -69,6 +62,7 @@ public class TarefaAdapter extends BaseAdapter {
         }
         return v;
     }
+
     public void remove(Tarefa tarefa) {
 
         this.tarefas.remove(tarefa);

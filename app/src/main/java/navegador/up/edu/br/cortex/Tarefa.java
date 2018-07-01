@@ -10,7 +10,7 @@ public class Tarefa implements Serializable{
     private String dataInicio;
     private String dataFim;
     private String sequencial;
-    private boolean statusTarefa;
+    private int statusTarefa;
 
     public Integer getId() {
         return id;
@@ -60,11 +60,11 @@ public class Tarefa implements Serializable{
         this.sequencial = sequencial;
     }
 
-    public boolean isStatusTarefa() {
+    public int getStatusTarefa() {
         return statusTarefa;
     }
 
-    public void setStatusTarefa(boolean statusTarefa) {
+    public void setStatusTarefa(int statusTarefa) {
         this.statusTarefa = statusTarefa;
     }
 

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="navegador.up.edu.br.cortex">
 
-    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -17,14 +17,20 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.SET_ALARM" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.android.gms.actions.CREATE_NOTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- <data android:mimeType=”*/*”> -->
             </intent-filter>
+
         </activity>
         <activity
             android:name=".TarefaActivity"
             android:label="@string/title_activity_tarefa"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
     </application>
 
 </manifest>

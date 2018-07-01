@@ -4,6 +4,7 @@
     <string name="title_activity_tarefa">TarefaActivity</string>
     <array name="sequencia">
         <item>Unico</item>
+        <item>Diario</item>
         <item>Semanal</item>
         <item>Mensal</item>
         <item>Anual</item>

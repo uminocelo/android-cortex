@@ -15,32 +15,27 @@ public class TarefaDao {
     static  Integer id = 0;
 
 
-    public void salvar(Tarefa tarefa){
+    public boolean salvar(Tarefa tarefa){
+
         SQLiteDatabase conn = Conn.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put("titulo",tarefa.getTitulo());
-
         values.put("descricao",tarefa.getDescricao());
-
         values.put("dataInicio",tarefa.getDataInicio());
-
-        if (tarefa.getDataFim() == null){
-            values.put("dataFim","");
-        } else {
+        if(tarefa.getSequencial().equals("Unico")){
+            values.put("dataFim","Evento unico");
+        }else {
             values.put("dataFim",tarefa.getDataFim());
         }
         values.put("sequencial",tarefa.getSequencial());
-
+        values.put("statusTarefas",tarefa.getStatusTarefa());
         if(tarefa.getId() == null){
-            values.put("statusTarefas",false);
-
             conn.insert("tarefa", null,values);
+            return false;
         } else {
-            values.put("statusTarefas",true);
             conn.update("tarefa", values,"id = ?", new String [] {tarefa.getId().toString()});
+            return true;
         }
-
 
     }
 
@@ -57,29 +52,13 @@ public class TarefaDao {
                 tarefa.setSequencial(c.getString(3));
                 tarefa.setDataInicio(c.getString(4));
                 tarefa.setDataFim(c.getString(5));
-                tarefa.setStatusTarefa(Boolean.parseBoolean(c.getString(6)));
+                tarefa.setStatusTarefa(c.getInt(6));
                 tarefas.add(tarefa);
             }while(c.moveToNext());
         }
         return  tarefas;
     }
 
-    //
-    public void alterarTarefa(Tarefa tarefa, boolean ativar){
-        SQLiteDatabase conn = Conn.getInstance().getWritableDatabase();
-        ContentValues dados = new ContentValues();
-        dados.put("titulo",tarefa.getTitulo());
-        dados.put("descricao",tarefa.getDescricao());
-        dados.put("dataInicio",tarefa.getDataInicio());
-        dados.put("dataFim",tarefa.getDataFim());
-        dados.put("sequencial",tarefa.getSequencial());
-        if(ativar == false){
-            dados.put("statusTarefas", ativar);
-        }else{
-            dados.put("statusTarefas", ativar);
-        }
-        conn.update("tarefa",dados,"id = ?",new String[]{tarefa.getId().toString()});
-    }
 
     public void excluir(Tarefa tarefa){
         SQLiteDatabase coon = Conn.getInstance().getWritableDatabase();

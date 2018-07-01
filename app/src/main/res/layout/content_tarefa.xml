@@ -9,19 +9,19 @@
     tools:showIn="@layout/activity_tarefa">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="103dp">
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="59dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/lbl_titulo"
@@ -36,7 +36,7 @@
 
                 <EditText
                     android:id="@+id/txt_titulo"
-                    android:layout_width="289dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
@@ -91,6 +91,30 @@
 
             </TableRow>
 
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/lbl_sequencial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lineSpacingExtra="12sp"
+                    android:text="Frequência :"
+                    android:textAlignment="center"
+                    android:textColor="@color/cortexTitleBar"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/sequencia" />
+
+            </TableRow>
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -109,33 +133,57 @@
                 <TextView
                     android:id="@+id/txtFim"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="00/00/0000"
                     android:textSize="24sp" />
 
             </TableRow>
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/lbl_sequencial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/lbl_ativar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:lineSpacingExtra="12sp"
-                    android:text="Frequência :"
+                    android:text="Completar:"
                     android:textAlignment="center"
                     android:textColor="@color/cortexTitleBar"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/spinner"
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="84dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textOff="Não"
+                    android:textOn="Sim" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/cliqueAlarme"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:entries="@array/sequencia" />
+                    android:text="Crie um alarme:"
+                    android:lineSpacingExtra="12sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/cortexTitleBar"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
 
+                <TextView
+                    android:id="@+id/horario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Selecionar horario"
+                    android:textSize="18sp" />
             </TableRow>
         </TableLayout>
     </ScrollView>

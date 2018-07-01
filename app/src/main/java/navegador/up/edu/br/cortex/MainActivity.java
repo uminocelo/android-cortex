@@ -1,6 +1,7 @@
 package navegador.up.edu.br.cortex;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,39 +37,41 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new Conn(getApplicationContext(), "tarefas.db", null ,2);
+        new Conn(getApplicationContext(), "tarefas.db", null ,1);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                       Intent it = new Intent(MainActivity.this,TarefaActivity.class);
-                       startActivity(it);
-                }
-            }
+                                   @Override
+                                   public void onClick(View view) {
+
+                                       Intent it = new Intent(MainActivity.this,TarefaActivity.class);
+                                       startActivity(it);
+                                   }
+                               }
         );
 
 
         final ListView listaTarefas = (ListView)findViewById(R.id.listaTarefas);
 
-        TarefaAdapter ta = new TarefaAdapter(new TarefaDao().listar(),this);
+        final TarefaAdapter ta = new TarefaAdapter(new TarefaDao().listar(),this);
         listaTarefas.setAdapter(ta);
 
         //ACAO DE CLIQUE
         listaTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+            public void onItemClick( final AdapterView<?> adapterView, View view, final int i, long id) {
                 Tarefa t = (Tarefa) adapterView.getItemAtPosition(i);
                 Intent it = new Intent(MainActivity.this,TarefaActivity.class);
                 it.putExtra("tarefa",t);
                 startActivity(it);
+
             }
         });
 
         listaTarefas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int position, long l) {
+            public boolean onItemLongClick(final AdapterView<?> av, View view, final int position, long l) {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setMessage("Deseja completar a tarefa?");
@@ -76,43 +79,37 @@ public class MainActivity extends AppCompatActivity {
                 alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
 
-                        new TarefaDao().alterarTarefa(tarefa, true);
-                        //((TarefaAdapter) adapterView.getAdapter()).notifyDataSetChanged();
+                        Tarefa tarefa = (Tarefa)av.getItemAtPosition(position);
+                        tarefa.setStatusTarefa(1);
+                        boolean resultado = new TarefaDao().salvar(tarefa);
+                        if(resultado) {
+                            ((TarefaAdapter) av.getAdapter()).notifyDataSetChanged();
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    "Não salvou",
+                                    Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 });
 
-                alert.setNegativeButton("Não, marcar como incompleta.", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("Não, desejo excluir.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Tarefa tarefa = (Tarefa) adapterView.getItemAtPosition(position);
-                        new TarefaDao().alterarTarefa(tarefa, false);
-                        //((TarefaAdapter) adapterView.getAdapter()).notifyDataSetChanged();
+                        Tarefa tarefa = (Tarefa) av.getItemAtPosition(position);
+                        new TarefaDao().excluir(tarefa);
+                        ((TarefaAdapter) av.getAdapter()).remove(tarefa);
+                        ((TarefaAdapter) av.getAdapter()).notifyDataSetChanged();
                     }
                 });
                 alert.show();
-
                 return true;
-
             }
-        });
+        }
+        );
 
-        /*
-        *
-        *
-        complet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (complet.isChecked()) {
-                    //Tarefa tarefa = (Tarefa) listaTarefas.getSelectedItemPosition(i);
 
-                    new TarefaDao().alterarTarefa(tarefa, true);
-                }
-            }
-        });
-        * */
     }
 
 
@@ -142,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
     public void enviarEmail(MenuItem item) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+
         View promptView = layoutInflater.inflate(R.layout.dialog_get_email, null);
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilder.setView(promptView);
 
@@ -163,10 +162,10 @@ public class MainActivity extends AppCompatActivity {
 
                         for (Tarefa x: tods
                                 ) {
-                            if(x.isStatusTarefa()==false){
-                                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Incompleto\n\n");
+                            if(x.getStatusTarefa()==0){
+                                te = te + ("Titulo: " + x.getTitulo() + "\nDescrição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Incompleto\n\n");
                             }else{
-                                te = te + ("Titulo: " + x.getTitulo() + "\nDescruição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Completo\n\n");
+                                te = te + ("Titulo: " + x.getTitulo() + "\nDescrição: " + x.getDescricao() + "\nSequencia:"+x.getSequencial()+"\nStatus: Completo\n\n");
                             }
 
                         }
